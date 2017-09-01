@@ -31,5 +31,12 @@ class Ride < ApplicationRecord
 				end
 			end
 		end
+
+		ride
+	end
+
+	def self.calculate_distance(start_station_id, end_station_id)
+		ride = Ride.where(start_station_id: start_station_id, end_station_id: end_station_id).first_or_initialize
+		ride.distance.nil? ? Ride.calculate_ride(ride) : ride
 	end
 end
