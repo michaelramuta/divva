@@ -1,6 +1,3 @@
-require 'net/http'
-require 'json'
-
 class RidesController < ApplicationController
 
 	def index
@@ -21,26 +18,7 @@ class RidesController < ApplicationController
 			
 			# calculate all unknown rides
 			uncalculated_rides.each do |ride|
-				station_1 = Station.find_by(station_id: ride.start_station_id)
-				station_2 = Station.find_by(station_id: ride.end_station_id)
-
-				if !station_1.nil? && !station_2.nil?
-					base_url = 'https://maps.googleapis.com/maps/api/distancematrix/json'
-					location_parameters = '?origins=' + station_1.lat.to_s + ',' + station_1.lon.to_s + '&destinations=' + station_2.lat.to_s + ',' + station_2.lon.to_s
-					additional_params = '&mode=bicyclingkey&units=imperial&key=' + ENV['GOOGLE_MAPS_KEY']
-					uri = URI(base_url + location_parameters + additional_params)
-					response = Net::HTTP.get(uri)
-					result = JSON.parse(response)
-
-					if result['status'] == 'OK'
-						result['rows'].each_with_index do |row,i|
-							row['elements'].each do |element,j|
-								ride.distance = element['distance']['value'].to_f
-								ride.save
-							end
-						end
-					end
-				end
+				Ride.calculate_ride(ride)
 			end
 
 			# map out all rides
