@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 20170901020338) do
   create_table "trips", force: :cascade do |t|
     t.bigint "ride_id"
     t.bigint "user_id"
-    t.datetime "start"
-    t.datetime "end"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ride_id"], name: "index_trips_on_ride_id"

@@ -9,4 +9,7 @@ Rails.application.routes.draw do
   resources :stations do
   end
 
+  resources :trips do
+  end
+
 end
