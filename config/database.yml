@@ -26,4 +26,4 @@ production:
   <<: *default
   database: divva
   username: divva
-  password: <%= ENV['DIVVA_API_DATABASE_PASSWORD'] %>
+  password: <%= ENV['DIVVA_DATABASE_PASSWORD'] %>
